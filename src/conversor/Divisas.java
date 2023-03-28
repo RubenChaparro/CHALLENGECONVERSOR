@@ -1,4 +1,4 @@
-package divisas;
+package conversor;
 
 public enum Divisas {
         DOLLAR(4750.23),

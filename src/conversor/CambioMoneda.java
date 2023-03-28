@@ -1,4 +1,4 @@
-package divisas;
+package conversor;
 
 public class CambioMoneda {
 
