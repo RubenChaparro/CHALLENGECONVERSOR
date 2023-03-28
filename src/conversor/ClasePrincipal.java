@@ -9,16 +9,16 @@ public class ClasePrincipal {
     public static void main(String[] args) {
 
         JFrame convertidor = new JFrame("Convertidor");
+        JPanel panelPrincipal = new JPanel();
+        panelPrincipal.setLayout(new BorderLayout());
+
 
         JPanel panel1 = new JPanel();
-        panel1.setLayout(new FlowLayout(FlowLayout.LEFT));
+        panel1.setLayout(new GridLayout(4,2,10,10));
 
         JLabel monedaLocal = new JLabel();
         monedaLocal.setText("Escoge tu moneda local: ");
-
-
         panel1.add(monedaLocal);
-
 
         JComboBox monedasLocales = new JComboBox();
         monedasLocales.addItem(Divisas.DOLLAR);
@@ -29,12 +29,9 @@ public class ClasePrincipal {
         monedasLocales.addItem(Divisas.PESO);
         panel1.add(monedasLocales);
 
-
-        JPanel panel2 = new JPanel();
-
         JLabel monedaExtranjera = new JLabel();
         monedaExtranjera.setText("Escoge tu moneda Extranjera: ");
-        panel2.add(monedaExtranjera);
+        panel1.add(monedaExtranjera);
 
         JComboBox monedasExtranjeras = new JComboBox();
         monedasExtranjeras.addItem(Divisas.DOLLAR);
@@ -43,68 +40,41 @@ public class ClasePrincipal {
         monedasExtranjeras.addItem(Divisas.YEN);
         monedasExtranjeras.addItem(Divisas.WON);
         monedasExtranjeras.addItem(Divisas.PESO);
-        panel2.add(monedasExtranjeras);
-
-
-        JPanel panel3 = new JPanel();
-        panel3.setLayout(new FlowLayout(FlowLayout.LEFT));
+        panel1.add(monedasExtranjeras);
 
         JLabel convertir = new JLabel();
         convertir.setText("Escribe la cantidad a convertir: ");
-        panel3.add(convertir);
+        panel1.add(convertir);
         JTextField cantidad = new JTextField();
-        panel3.add(cantidad);
-
-
-        JPanel panel4 = new JPanel();
-        panel4.setLayout(new FlowLayout(FlowLayout.LEFT));
+        panel1.add(cantidad);
 
         JLabel textoResultado = new JLabel();
         textoResultado.setText("Tu cambio de " + "a " + "es: ");
-        panel4.add(textoResultado);
+        panel1.add(textoResultado);
 
         JLabel resultado = new JLabel();
         resultado.setText("Tu cambio de " + "a " + "es: ");
-        panel4.add(resultado);
+        panel1.add(resultado);
 
 
-        JPanel panel5 = new JPanel();
-        convertidor.setLayout(new GridBagLayout());
+        JPanel panel2 = new JPanel();
+        convertidor.setLayout(new FlowLayout());
 
         JButton cambiar = new JButton("Cambiar");
         JButton limpiar = new JButton("Limpiar");
         JButton salir = new JButton("Salir");
 
 
-        panel5.add(cambiar);
-        panel5.add(limpiar);
-        panel5.add(salir);
+        panel2.add(cambiar);
+        panel2.add(limpiar);
+        panel2.add(salir);
+
+        panelPrincipal.add(panel1,BorderLayout.CENTER);
+        panelPrincipal.add(panel2,BorderLayout.SOUTH);
+
+        convertidor.add(panelPrincipal);
 
 
-
-        Box contenedor1 = Box.createVerticalBox();
-        //FlowLayout dispocicion = new FlowLayout(FlowLayout.LEFT);
-       //
-        Box contenedor2 = Box.createVerticalBox();
-
-
-        GridBagConstraints posicionContenedor = new GridBagConstraints();
-
-
-
-
-        contenedor1.add(panel1);
-        contenedor1.add(panel2);
-        contenedor1.add(panel3);
-        contenedor1.add(panel4);
-        posicionContenedor.gridx = 0;
-        posicionContenedor.gridy = 0;
-        convertidor.add(contenedor1,posicionContenedor);
-
-        contenedor2.add(panel5);
-        posicionContenedor.gridx = 0;
-        posicionContenedor.gridy = 1;
-        convertidor.add(contenedor2, posicionContenedor);
 
 
 
