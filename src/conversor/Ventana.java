@@ -5,6 +5,7 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.function.DoubleUnaryOperator;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -58,6 +59,7 @@ public class Ventana extends JFrame {
         convertir.setText("Escribe la cantidad a convertir: ");
         panel1.add(convertir);
         cantidad = new JTextField();
+        cantidad.setText(Double.toString(1));
         panel1.add(cantidad);
         mensajeDivisas = new JLabel();
         panel1.add(mensajeDivisas);
@@ -71,42 +73,44 @@ public class Ventana extends JFrame {
         JPanel panel2 = new JPanel();
 
         cambiar = new JButton("Cambiar");
+        ActionListener listener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
 
-        //ActionListener listener = new ActionListener() {
+                Divisas divisaLocal = (Divisas) monedasLocales.getSelectedItem();
+                Divisas divisaExtranjera = (Divisas) monedasExtranjeras.getSelectedItem();
+                String cantidades = cantidad.getText();
+                CambioMoneda conversor = new CambioMoneda();
+                String resultadoDivisa = conversor.aMonedaExtranjera(divisaLocal.getCambio(),
+                        divisaExtranjera.getCambio(), Double.parseDouble(cantidades));
 
-            //@Override
-            //public void actionPerformed(ActionEvent e) {
-
-                ActionListener listener2 = new ActionListener() {
+                ActionListener btnCambiar = new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
+                        VentanaResultado ventanaResultado = new VentanaResultado();
 
-                        Divisas divisaLocal = (Divisas) monedasLocales.getSelectedItem();
-                        Divisas divisaExtranjera = (Divisas) monedasExtranjeras.getSelectedItem();
-                        String cantidades = cantidad.getText();
-                        CambioMoneda conversor = new CambioMoneda();
-                        String resultadoDivisa = conversor.aMonedaExtranjera(divisaLocal.getCambio(),
-                                divisaExtranjera.getCambio(), Double.parseDouble(cantidades));
-                                
-                        mensajeDivisas.setText(
+                        ventanaResultado.mensajeDivisas.setText(
                                 "De " + divisaLocal.toString() + " a " + divisaExtranjera.toString() + " es: ");
-                        resultadoDivisas.setText(resultadoDivisa);
-                        System.out.println(divisaLocal.toString());
-                        System.out.println(divisaExtranjera.toString());
+                        ventanaResultado.resultadoDivisas.setText(resultadoDivisa);
+
+                        ventanaResultado.pack();
+                        ventanaResultado.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                        ventanaResultado.setLocationRelativeTo(null);
+                        ventanaResultado.setVisible(true);
                     }
                 };
-                monedasExtranjeras.addActionListener(listener2);
-                monedasLocales.addActionListener(listener2);
-            //}
-        //};
+                cambiar.addActionListener(btnCambiar);
 
-        //cambiar.addActionListener(listener);
+            }
+        };
+        monedasExtranjeras.addActionListener(listener);
+        //monedasLocales.addActionListener(listener);
 
         JButton limpiar = new JButton("Limpiar");
         limpiar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                cantidad.setText(null);
+                cantidad.setText(Double.toString(1));
                 cantidad.requestFocus();
 
             }
