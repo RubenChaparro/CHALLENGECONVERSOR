@@ -1,10 +1,16 @@
 package conversor;
 
-public class CambioMoneda {
+import java.text.DecimalFormat;
 
+public class CambioMoneda {
 
     public CambioMoneda() {
     }
-    
-    public String aMonedaExtranjera(double divisaorigen, double divisaCambio) { return Double.toString(((divisaorigen*Divisas.PESO.getCambio())/divisaCambio)); }
+
+    DecimalFormat format = new DecimalFormat("#.00");
+
+    public String aMonedaExtranjera(double divisaorigen, double divisaCambio, double cantidad) {
+        String resultado = format.format((cantidad * (divisaorigen * Divisas.PESO.getCambio())));
+        return resultado;
+    }
 }

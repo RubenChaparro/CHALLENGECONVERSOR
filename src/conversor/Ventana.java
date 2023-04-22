@@ -18,6 +18,10 @@ public class Ventana extends JFrame {
     JPanel panelPrincipal;
     JComboBox<Divisas> monedasLocales;
     JComboBox<Divisas> monedasExtranjeras;
+    JTextField cantidad;
+    JLabel mensajeDivisas;
+    JLabel resultadoDivisas;
+    JButton cambiar;
 
     public Ventana() {
         this.setLayout(new FlowLayout());
@@ -42,10 +46,6 @@ public class Ventana extends JFrame {
 
         monedasLocales = new JComboBox<>(Divisas.values());
         panel1.add(monedasLocales);
-        Object divisaLocal = monedasLocales.getSelectedItem();
-        System.out.println(divisaLocal.toString());
-
-        // Divisa divisaLocal = new Divisa(monedasLocales);
 
         JLabel monedaExtranjera = new JLabel();
         monedaExtranjera.setText("Escoge tu moneda Extranjera: ");
@@ -57,50 +57,71 @@ public class Ventana extends JFrame {
         JLabel convertir = new JLabel();
         convertir.setText("Escribe la cantidad a convertir: ");
         panel1.add(convertir);
-        JTextField cantidad = new JTextField();
+        cantidad = new JTextField();
         panel1.add(cantidad);
-        JLabel texto = new JLabel();
-        panel1.add(texto);
-        JLabel resultado = new JLabel();
-        panel1.add(resultado);
+        mensajeDivisas = new JLabel();
+        panel1.add(mensajeDivisas);
+        resultadoDivisas = new JLabel();
+        panel1.add(resultadoDivisas);
         panelPrincipal.add(panel1, BorderLayout.CENTER);
 
-        ActionListener listener = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Divisas divisaLocal = (Divisas) monedasLocales.getSelectedItem();
-                // Divisas divisaExtranjera = (Divisas) monedasExtranjeras.getSelectedItem();
-
-                ActionListener listener2 = new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        Divisas divisaLocal = (Divisas) monedasLocales.getSelectedItem();
-                        Divisas divisaExtranjera = (Divisas) monedasExtranjeras.getSelectedItem();
-                        CambioMoneda conversor = new CambioMoneda();
-                        String resultadoDivisa = conversor.aMonedaExtranjera(divisaLocal.getCambio(), divisaExtranjera.getCambio());
-                        texto.setText("De " + monedasLocales.getSelectedItem().toString() + " a "
-                                + monedasExtranjeras.getSelectedItem().toString() + " es: ");
-                                resultado.setText(resultadoDivisa);
-                    }
-                };
-                monedasExtranjeras.addActionListener(listener2);
-            }
-        };
-        monedasLocales.addActionListener(listener);
     }
 
     public void panel2() {
         JPanel panel2 = new JPanel();
 
-        JButton cambiar = new JButton("Cambiar");
+        cambiar = new JButton("Cambiar");
+
+        //ActionListener listener = new ActionListener() {
+
+            //@Override
+            //public void actionPerformed(ActionEvent e) {
+
+                ActionListener listener2 = new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+
+                        Divisas divisaLocal = (Divisas) monedasLocales.getSelectedItem();
+                        Divisas divisaExtranjera = (Divisas) monedasExtranjeras.getSelectedItem();
+                        String cantidades = cantidad.getText();
+                        CambioMoneda conversor = new CambioMoneda();
+                        String resultadoDivisa = conversor.aMonedaExtranjera(divisaLocal.getCambio(),
+                                divisaExtranjera.getCambio(), Double.parseDouble(cantidades));
+                                
+                        mensajeDivisas.setText(
+                                "De " + divisaLocal.toString() + " a " + divisaExtranjera.toString() + " es: ");
+                        resultadoDivisas.setText(resultadoDivisa);
+                        System.out.println(divisaLocal.toString());
+                        System.out.println(divisaExtranjera.toString());
+                    }
+                };
+                monedasExtranjeras.addActionListener(listener2);
+                monedasLocales.addActionListener(listener2);
+            //}
+        //};
+
+        //cambiar.addActionListener(listener);
 
         JButton limpiar = new JButton("Limpiar");
+        limpiar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cantidad.setText(null);
+                cantidad.requestFocus();
+
+            }
+        });
         JButton salir = new JButton("Salir");
+        salir.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
+        });
 
         panel2.add(cambiar);
         panel2.add(limpiar);
         panel2.add(salir);
         panelPrincipal.add(panel2, BorderLayout.SOUTH);
     }
-
 }

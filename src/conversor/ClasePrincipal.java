@@ -1,7 +1,6 @@
 package conversor;
 
 import javax.swing.*;
-import java.text.DecimalFormat;
 
 public class ClasePrincipal {
 
@@ -13,9 +12,5 @@ public class ClasePrincipal {
         convertidor.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         convertidor.setLocationRelativeTo(null);
         convertidor.setVisible(true);
-        
-
-
-        DecimalFormat format = new DecimalFormat("#.00");
     }
 }
