@@ -73,20 +73,20 @@ public class Ventana extends JFrame {
         JPanel panel2 = new JPanel();
 
         cambiar = new JButton("Cambiar");
-        ActionListener listener = new ActionListener() {
+        ActionListener btnCambiar = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-                Divisas divisaLocal = (Divisas) monedasLocales.getSelectedItem();
-                Divisas divisaExtranjera = (Divisas) monedasExtranjeras.getSelectedItem();
-                String cantidades = cantidad.getText();
-                CambioMoneda conversor = new CambioMoneda();
-                String resultadoDivisa = conversor.aMonedaExtranjera(divisaLocal.getCambio(),
-                        divisaExtranjera.getCambio(), Double.parseDouble(cantidades));
-
-                ActionListener btnCambiar = new ActionListener() {
+                /*ActionListener listener = new ActionListener() {
                     @Override
-                    public void actionPerformed(ActionEvent e) {
+                    public void actionPerformed(ActionEvent e) {*/
+
+                        Divisas divisaLocal = (Divisas) monedasLocales.getSelectedItem();
+                        Divisas divisaExtranjera = (Divisas) monedasExtranjeras.getSelectedItem();
+                        String cantidades = cantidad.getText();
+                        CambioMoneda conversor = new CambioMoneda();
+                        String resultadoDivisa = conversor.aMonedaExtranjera(divisaLocal.getCambio(),
+                                divisaExtranjera.getCambio(), Double.parseDouble(cantidades));
+
                         VentanaResultado ventanaResultado = new VentanaResultado();
 
                         ventanaResultado.mensajeDivisas.setText(
@@ -99,13 +99,12 @@ public class Ventana extends JFrame {
                         ventanaResultado.setVisible(true);
                     }
                 };
-                cambiar.addActionListener(btnCambiar);
+                //monedasExtranjeras.addActionListener(listener);
+                //monedasLocales.addActionListener(listener);
+            //}
+        //};
 
-            }
-        };
-        monedasExtranjeras.addActionListener(listener);
-        //monedasLocales.addActionListener(listener);
-
+        cambiar.addActionListener(btnCambiar);
         JButton limpiar = new JButton("Limpiar");
         limpiar.addActionListener(new ActionListener() {
             @Override
