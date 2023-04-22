@@ -76,9 +76,6 @@ public class Ventana extends JFrame {
         ActionListener btnCambiar = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                /*ActionListener listener = new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {*/
 
                         Divisas divisaLocal = (Divisas) monedasLocales.getSelectedItem();
                         Divisas divisaExtranjera = (Divisas) monedasExtranjeras.getSelectedItem();
@@ -99,10 +96,6 @@ public class Ventana extends JFrame {
                         ventanaResultado.setVisible(true);
                     }
                 };
-                //monedasExtranjeras.addActionListener(listener);
-                //monedasLocales.addActionListener(listener);
-            //}
-        //};
 
         cambiar.addActionListener(btnCambiar);
         JButton limpiar = new JButton("Limpiar");
