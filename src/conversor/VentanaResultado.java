@@ -1,17 +1,16 @@
 package conversor;
 
-import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
-import javax.swing.JComboBox;
+
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
 public class VentanaResultado extends JFrame {
 
@@ -19,17 +18,17 @@ public class VentanaResultado extends JFrame {
 
         this.setLayout(new FlowLayout());
         panelPrincipal();
-        
+
     }
 
+    // Atributos de la ventana
     JPanel panelPrincipal, panelBotones, panelEtiquetas;
     JLabel mensajeDivisas, resultadoDivisas;
-    JButton cerrar;
-    
+    JButton btnCerrar;
 
     public void panelPrincipal() {
         panelPrincipal = new JPanel();
-        panelPrincipal.setLayout(new BorderLayout());
+        panelPrincipal.setLayout(new GridLayout(2, 1));
         this.getContentPane().add(panelPrincipal);
         Divisas();
         panelBotones();
@@ -37,37 +36,38 @@ public class VentanaResultado extends JFrame {
 
     public void Divisas() {
         panelEtiquetas = new JPanel();
-        panelEtiquetas.setLayout(new BorderLayout());
+        panelEtiquetas.setLayout(new GridLayout(2, 1));
 
         mensajeDivisas = new JLabel();
-        panelEtiquetas.add(mensajeDivisas, BorderLayout.NORTH);
+
+        // Centramos el texto del Jlabel
+        mensajeDivisas.setHorizontalAlignment(SwingConstants.CENTER);
+        mensajeDivisas.setVerticalAlignment(SwingConstants.CENTER);
+        panelEtiquetas.add(mensajeDivisas);
 
         resultadoDivisas = new JLabel();
-        panelEtiquetas.add(resultadoDivisas, BorderLayout.SOUTH);
+        resultadoDivisas.setHorizontalAlignment(SwingConstants.CENTER);
+        resultadoDivisas.setVerticalAlignment(SwingConstants.CENTER);
 
-        panelPrincipal.add(panelEtiquetas, BorderLayout.NORTH);
+        panelEtiquetas.add(resultadoDivisas);
 
-        
+        panelPrincipal.add(panelEtiquetas);
+
     }
 
     public void panelBotones() {
         panelBotones = new JPanel();
-        panelBotones.setLayout(new GridLayout(1, 2)); 
-        cerrar = new JButton("Cerrar");
-        cerrar.addActionListener(new ActionListener() {
+        panelBotones.setLayout(new FlowLayout());
+        btnCerrar = new JButton("Cerrar");
+        btnCerrar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
             }
         });
-        panelBotones.add(cerrar);
-        panelPrincipal.add(panelBotones, BorderLayout.SOUTH);
 
+        panelBotones.add(btnCerrar);
+        panelPrincipal.add(panelBotones);
 
-    }
-
-        public void accionBoton(JComboBox<Divisas> monedasLocales, JComboBox<Divisas> monedasExtranjeras, JTextField cantidad) {
-        
     }
 }
-

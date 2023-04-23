@@ -1,5 +1,7 @@
 package conversor;
 
+// Importamos los paquetes necesarios 
+
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
@@ -16,20 +18,29 @@ import javax.swing.JTextField;
 
 public class Ventana extends JFrame {
 
-    JPanel panelPrincipal;
-    JComboBox<Divisas> monedasLocales;
-    JComboBox<Divisas> monedasExtranjeras;
-    JTextField cantidad;
-    JLabel mensajeDivisas;
-    JLabel resultadoDivisas;
-    JButton cambiar;
+    // Creamos los atributos de la ventana
 
+    JPanel panelPrincipal, panel1, panel2;
+    // definimos que el JComboBox usa datos de tipo Divisa
+    JComboBox<Divisas> cmbMonedasLocales, cmbMonedasExtranjeras;
+    JTextField txtCantidad;
+    JLabel monedaLocal, monedaExtranjera, convertir;
+    JButton btnCambiar, btnLimpiar, btnSalir;
+
+    // Constructor de la ventana
     public Ventana() {
+
+        // Configuramos el Layout del JFrame (this hace referencia al JFrame)
+        // Debemos saber elegir el Layout entre BorderLayout(Ubicacion por punto
+        // cardinal), GridLayout(Ubicacion por "celdas") y FlowLayout (ubicacion por
+        // espacio)
         this.setLayout(new FlowLayout());
+        // Agregamos el panel principal al JFrame llamando el metodo panelPrincipal
         panelPrincipal();
     }
 
     private void panelPrincipal() {
+        // Configramos el panel principal agragando los panel1 y panel2
         panelPrincipal = new JPanel();
         panelPrincipal.setLayout(new BorderLayout());
         this.getContentPane().add(panelPrincipal);
@@ -38,89 +49,94 @@ public class Ventana extends JFrame {
     }
 
     private void panel1() {
-        JPanel panel1 = new JPanel();
+        // Configuramos el panel agrgando los elementos de este panel
+        panel1 = new JPanel();
+        // Establecemos el numero de filas y columnas del GridLayout
         panel1.setLayout(new GridLayout(4, 2, 10, 10));
 
-        JLabel monedaLocal = new JLabel();
+        monedaLocal = new JLabel();
         monedaLocal.setText("Escoge tu moneda local: ");
         panel1.add(monedaLocal);
 
-        monedasLocales = new JComboBox<>(Divisas.values());
-        panel1.add(monedasLocales);
+        // Creamos los JComboBox relacionandolos con el enum
+        cmbMonedasLocales = new JComboBox<>(Divisas.values());
+        panel1.add(cmbMonedasLocales);
 
-        JLabel monedaExtranjera = new JLabel();
+        monedaExtranjera = new JLabel();
         monedaExtranjera.setText("Escoge tu moneda Extranjera: ");
         panel1.add(monedaExtranjera);
 
-        monedasExtranjeras = new JComboBox<>(Divisas.values());
-        panel1.add(monedasExtranjeras);
+        cmbMonedasExtranjeras = new JComboBox<>(Divisas.values());
+        panel1.add(cmbMonedasExtranjeras);
 
-        JLabel convertir = new JLabel();
+        convertir = new JLabel();
         convertir.setText("Escribe la cantidad a convertir: ");
         panel1.add(convertir);
-        cantidad = new JTextField();
-        panel1.add(cantidad);
-        mensajeDivisas = new JLabel();
-        panel1.add(mensajeDivisas);
-        resultadoDivisas = new JLabel();
-        panel1.add(resultadoDivisas);
+        txtCantidad = new JTextField();
+        panel1.add(txtCantidad);
         panelPrincipal.add(panel1, BorderLayout.CENTER);
 
     }
 
     public void panel2() {
-        JPanel panel2 = new JPanel();
+        panel2 = new JPanel();
 
-        cambiar = new JButton("Cambiar");
-        ActionListener btnCambiar = new ActionListener() {
+        btnCambiar = new JButton("Cambiar");
+        ActionListener cambiar = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+                // Capturamos la excepcion si no escribimos un numero en el JTexField
                 try {
-                        Divisas divisaLocal = (Divisas) monedasLocales.getSelectedItem();
-                        Divisas divisaExtranjera = (Divisas) monedasExtranjeras.getSelectedItem();
-                        String cantidades = cantidad.getText();
-                        CambioMoneda conversor = new CambioMoneda();
-                        String resultadoDivisa = conversor.aMonedaExtranjera(divisaLocal.getCambio(),
-                                divisaExtranjera.getCambio(), Double.parseDouble(cantidades));
+                    // Creamos las diferentes variables que nos capturan las opciones que
+                    // seleccionamos
+                    Divisas divisaLocal = (Divisas) cmbMonedasLocales.getSelectedItem();
+                    Divisas divisaExtranjera = (Divisas) cmbMonedasExtranjeras.getSelectedItem();
+                    String cantidades = txtCantidad.getText();
+                    // Instanciamos la clase CambioMoneda para hacer el cambio de monedas
+                    CambioMoneda conversor = new CambioMoneda();
+                    String resultadoDivisa = conversor.aMonedaExtranjera(divisaLocal.getCambio(),
+                            divisaExtranjera.getCambio(), Double.parseDouble(cantidades));
 
-                        VentanaResultado ventanaResultado = new VentanaResultado();
+                    // Creamos la ventana para mostrar el resultado
+                    VentanaResultado ventanaResultado = new VentanaResultado();
 
-                        ventanaResultado.mensajeDivisas.setText(
-                                "De " + divisaLocal.toString() + " a " + divisaExtranjera.toString() + " es: ");
-                        ventanaResultado.resultadoDivisas.setText(resultadoDivisa);
+                    ventanaResultado.mensajeDivisas.setText(
+                            "De " + divisaLocal.toString() + " a " + divisaExtranjera.toString() + " es: ");
+                    ventanaResultado.resultadoDivisas.setText(resultadoDivisa);
 
-                        ventanaResultado.pack();
-                        ventanaResultado.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                        ventanaResultado.setLocationRelativeTo(null);
-                        ventanaResultado.setVisible(true);
-                    } catch (NumberFormatException exception) { 
-
-                        JOptionPane.showMessageDialog(null, "Debe ingresar una cantidad válida en numeros");
-                    }
-                    }
-                };
-
-        cambiar.addActionListener(btnCambiar);
-        JButton limpiar = new JButton("Limpiar");
-        limpiar.addActionListener(new ActionListener() {
+                    ventanaResultado.pack();
+                    ventanaResultado.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                    ventanaResultado.setLocationRelativeTo(null);
+                    ventanaResultado.setVisible(true);
+                } catch (NumberFormatException exception) {
+                    // Creamos una ventana emergente para mostrar un mensaje de error
+                    JOptionPane.showMessageDialog(null, "Debe ingresar una cantidad válida en numeros");
+                }
+            }
+        };
+        // Accion y botones para limpiar el JTextField, cerrar la ventana
+        btnCambiar.addActionListener(cambiar);
+        btnLimpiar = new JButton("Limpiar");
+        btnLimpiar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                cantidad.setText(null);
-                cantidad.requestFocus();
+                txtCantidad.setText(null);
+                txtCantidad.requestFocus();
 
             }
         });
-        JButton salir = new JButton("Salir");
-        salir.addActionListener(new ActionListener() {
+        btnSalir = new JButton("Salir");
+        btnSalir.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.exit(0);
             }
         });
 
-        panel2.add(cambiar);
-        panel2.add(limpiar);
-        panel2.add(salir);
+        panel2.add(btnCambiar);
+        panel2.add(btnCambiar);
+        panel2.add(btnSalir);
         panelPrincipal.add(panel2, BorderLayout.SOUTH);
     }
 }
