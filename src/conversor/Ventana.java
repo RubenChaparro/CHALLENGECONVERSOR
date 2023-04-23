@@ -5,12 +5,12 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.function.DoubleUnaryOperator;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -59,7 +59,6 @@ public class Ventana extends JFrame {
         convertir.setText("Escribe la cantidad a convertir: ");
         panel1.add(convertir);
         cantidad = new JTextField();
-        cantidad.setText(Double.toString(1));
         panel1.add(cantidad);
         mensajeDivisas = new JLabel();
         panel1.add(mensajeDivisas);
@@ -76,7 +75,7 @@ public class Ventana extends JFrame {
         ActionListener btnCambiar = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                try {
                         Divisas divisaLocal = (Divisas) monedasLocales.getSelectedItem();
                         Divisas divisaExtranjera = (Divisas) monedasExtranjeras.getSelectedItem();
                         String cantidades = cantidad.getText();
@@ -94,6 +93,10 @@ public class Ventana extends JFrame {
                         ventanaResultado.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                         ventanaResultado.setLocationRelativeTo(null);
                         ventanaResultado.setVisible(true);
+                    } catch (NumberFormatException exception) { 
+
+                        JOptionPane.showMessageDialog(null, "Debe ingresar una cantidad válida en numeros");
+                    }
                     }
                 };
 
@@ -102,7 +105,7 @@ public class Ventana extends JFrame {
         limpiar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                cantidad.setText(Double.toString(1));
+                cantidad.setText(null);
                 cantidad.requestFocus();
 
             }
